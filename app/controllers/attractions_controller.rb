@@ -1,37 +1,45 @@
 class AttractionsController < ApplicationController
+  before_action :find_attraction, only: [:show, :edit, :update]
+  before_action :admin_only, except: [:index, :show]
+
   def index
-    @attractions=Attraction.all
+    @attractions = Attraction.all
   end
 
   def new
-    @attraction=Attraction.new
-  end
-
-  def show
-    @attraction=Attraction.find(params[:id])
-    @ride=Ride.create(attraction_id:@attraction.id,user_id:current_user.id)
-  end
-
-  def edit
-    @attraction=Attraction.find(params[:id])
-  end
-
-  def update
-    @attraction=Attraction.find(params[:id])
-    @attraction.update(attractions_params)
-    redirect_to attraction_path(@attraction)
+    @attraction = Attraction.new
   end
 
   def create
-    @attraction=Attraction.create(attractions_params)
+    @attraction = Attraction.create(attraction_params)
     if @attraction
       redirect_to attraction_path(@attraction)
     else
-      redirect_to attractions_path
+      render :new
     end
   end
 
-  def attractions_params
-    params.require(:attraction).permit(:name,:tickets,:nausea_rating,:happiness_rating,:min_height)
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    @attraction.update(attraction_params)
+    if @attraction.save
+      redirect_to attraction_path(@attraction)
+    else
+      render :edit
+    end
+  end
+
+  private
+  def find_attraction
+    @attraction = Attraction.find_by(id: params[:id])
+  end
+
+  def attraction_params
+    params.require(:attraction).permit(:name, :min_height, :happiness_rating, :nausea_rating, :tickets)
   end
 end

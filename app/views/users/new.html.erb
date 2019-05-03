@@ -1,31 +1,18 @@
+<h1>Sign Up</h1>
 <%= form_for @user do |f| %>
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name,class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :height %>
-    <%= f.text_field :height,class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :happiness %>
-    <%= f.text_field :happiness,class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :nausea %>
-    <%= f.text_field :nausea,class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :tickets %>
-    <%= f.text_field :tickets,class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :admin,"Check if you are the owner" %>
-    <%= f.check_box :admin %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password,class:"form-control" %>
-  </div>
-<%= f.submit 'Create User', :class => 'btn btn-primary' %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br />
+  <%= f.label :height %>
+  <%= f.number_field :height %><br />
+  <%= f.label :happiness %>
+  <%= f.number_field :happiness %><br />
+  <%= f.label :nausea %>
+  <%= f.number_field :nausea %><br />
+  <%= f.label :tickets %>
+  <%= f.number_field :tickets %><br />
+  <%= f.label :password %>
+  <%= f.password_field :password %><br />
+  <p>Admin? <%= f.check_box :admin, options = {:class => "user_admin"} %></p><br />
+  <br />
+  <%= f.submit %>
 <% end %>

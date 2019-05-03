@@ -1,21 +1,14 @@
 class RidesController < ApplicationController
-  def index
-  end
+  before_action :require_login
 
   def create
-    @ride=Ride.find(params[:id])
-
-    puts @ride.take_ride
-
-    redirect_to user_path(@ride.user)
+    ride = Ride.create(user_id: current_user.id, attraction_id: params[:attraction_id])
+    if ride
+      response = ride.take_ride
+      flash[:notice] = response
+      redirect_to user_path(ride.user)
+    else
+      redirect_to attraction_path(ride.attraction)
+    end
   end
-
-  def show
-    @ride=Ride.find(params[:id])
-  end
-
-  def update
-  end
-
-
 end
